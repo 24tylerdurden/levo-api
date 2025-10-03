@@ -9,7 +9,9 @@ import (
 	"syscall"
 	"time"
 
+	handlers "github.com/24tylerdurden/levo-api/internal/Handlers"
 	"github.com/24tylerdurden/levo-api/internal/database"
+	"github.com/24tylerdurden/levo-api/internal/services"
 	"github.com/24tylerdurden/levo-api/pkg/config"
 	"github.com/gin-gonic/gin"
 
@@ -47,6 +49,36 @@ func main() {
 			"database": "connected",
 		})
 	})
+
+	// Initialize services
+
+	schemaService := services.NewSchemaService()
+
+	// Initialize handlers
+
+	schemaHandler := handlers.NewSchemaHandler()
+
+	// API routes
+	api := router.Group("/api/v1")
+	{
+		apps := api.Group("/application/:aplication")
+		{
+			apps.POST("/schemas", schemaHandler.UploadApplicationSchema)
+
+			apps.GET("/schemas/latest", schemaHandler.GetLatestApplicationSchema)
+
+			apps.GET("/schemas/:version", schemaHandler.GetApplicationSchemVersion)
+		}
+
+		services := apps.Group("/services/:services")
+		{
+			services.POST("/schemas", schemaHandler.UploadServiceSchema)
+
+			services.GET("/schemas/:latest", schemaHandler.GetLatestServiceSchema)
+
+			services.GET("/schemas/:version", schemaHandler.GetServiceSchemaVersion)
+		}
+	}
 
 	// Create HTTP server
 	srv := &http.Server{
