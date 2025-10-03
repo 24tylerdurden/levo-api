@@ -119,7 +119,7 @@ func (s *SchemaHandler) GetLatestApplicationSchema(c *gin.Context) {
 
 // Get Application schema version
 
-func (s *SchemaHandler) GetApplicationSchemVersion(c *gin.Context) {
+func (s *SchemaHandler) GetApplicationSchemaVersion(c *gin.Context) {
 	appName := c.Param("application")
 	version := c.Param("version")
 

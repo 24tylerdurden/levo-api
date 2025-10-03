@@ -52,11 +52,11 @@ func main() {
 
 	// Initialize services
 
-	schemaService := services.NewSchemaService()
+	schemaService := services.NewSchemaService(db, cfg.StoragePath)
 
 	// Initialize handlers
 
-	schemaHandler := handlers.NewSchemaHandler()
+	schemaHandler := handlers.NewSchemaHandler(schemaService)
 
 	// API routes
 	api := router.Group("/api/v1")
@@ -67,7 +67,7 @@ func main() {
 
 			apps.GET("/schemas/latest", schemaHandler.GetLatestApplicationSchema)
 
-			apps.GET("/schemas/:version", schemaHandler.GetApplicationSchemVersion)
+			apps.GET("/schemas/:version", schemaHandler.GetApplicationSchemaVersion)
 		}
 
 		services := apps.Group("/services/:services")
