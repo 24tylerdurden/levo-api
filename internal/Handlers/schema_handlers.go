@@ -58,10 +58,8 @@ func (s *SchemaHandler) UploadApplicationSchema(c *gin.Context) {
 }
 
 // Upload Schema Service for Services
-
 func (s *SchemaHandler) UploadServiceSchema(c *gin.Context) {
 	appName := c.Param("application")
-
 	serviceName := c.Param("service")
 
 	file, err := c.FormFile("file")

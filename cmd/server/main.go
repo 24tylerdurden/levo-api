@@ -61,7 +61,7 @@ func main() {
 	// API routes
 	api := router.Group("/api/v1")
 	{
-		apps := api.Group("/application/:aplication")
+		apps := api.Group("/applications/:application")
 		{
 			apps.POST("/schemas", schemaHandler.UploadApplicationSchema)
 
@@ -70,11 +70,11 @@ func main() {
 			apps.GET("/schemas/:version", schemaHandler.GetApplicationSchemaVersion)
 		}
 
-		services := apps.Group("/services/:services")
+		services := apps.Group("/services/:service")
 		{
 			services.POST("/schemas", schemaHandler.UploadServiceSchema)
 
-			services.GET("/schemas/:latest", schemaHandler.GetLatestServiceSchema)
+			services.GET("/schemas/latest", schemaHandler.GetLatestServiceSchema)
 
 			services.GET("/schemas/:version", schemaHandler.GetServiceSchemaVersion)
 		}

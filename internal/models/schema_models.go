@@ -3,28 +3,27 @@ package models
 import "time"
 
 type Application struct {
-	ID        uint      `json:"id" gorm:"primaryKey"`
-	Name      string    `json:"name" gorm:"uniqueIndex:idx_app_name"`
+	ID        uint      `json:"id"`
+	Name      string    `json:"name"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type Service struct {
-	ID            uint        `json:"id" gorm:"primaryKey"`
-	Name          string      `json:"name" gorm:"uniqueIndex:idx_service"`
-	ApplicationID uint        `json:"application_id"`
-	Application   Application `json:"application" gorm:"foreignKey:ApplicationID"`
-	CreatedAt     time.Time   `json:"created_at"`
+	ID            uint      `json:"id"`
+	Name          string    `json:"name"`
+	ApplicationID uint      `json:"application_id"`
+	CreatedAt     time.Time `json:"created_at"`
 }
 
 type SchemaVersion struct {
-	ID            uint      `json:"id" gorm:"primaryKey"`
-	ApplicationID uint      `json:"application_id"`
-	ServiceID     *uint     `json:"service_id,omitempty" gorm:"index;null"`
-	Version       string    `json:"version"`
-	FilePath      string    `json:"file_path"`
-	FileHash      string    `json:"file_hash"`
-	CreatedAt     time.Time `json:"created_at"`
+	ID            uint       `json:"id"`
+	ApplicationID uint       `json:"application_id"`
+	ServiceID     *uint      `json:"service_id,omitempty"`
+	Version       string     `json:"version"`
+	FilePath      string     `json:"file_path"`
+	FileHash      string     `json:"file_hash"`
+	CreatedAt     time.Time  `json:"created_at"`
 }
 
 type UploadResponse struct {
