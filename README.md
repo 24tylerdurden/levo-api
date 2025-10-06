@@ -57,21 +57,6 @@ The application includes the following tables:
    docker-compose down
    ```
 
-## Project Structure
-
-```
-levo-api/
-├── cmd/server/           # Main application entry point
-├── internal/database/     # Database connection and migration logic
-├── pkg/config/           # Configuration management
-├── migrations/           # SQL migration files
-├── data/                 # SQLite database files (created at runtime)
-├── storage/              # File storage directory
-├── Dockerfile            # Docker build configuration
-├── docker-compose.yml    # Docker Compose configuration
-└── go.mod               # Go module dependencies
-```
-
 ## Environment Variables
 
 The application supports the following environment variables:
@@ -99,6 +84,60 @@ The application supports the following environment variables:
    ```bash
    curl http://localhost:8080/health
    ```
+
+## CLI Tool
+
+The Levo CLI provides command-line access to the API functionality:
+
+### Installation
+
+The CLI is included in the Docker container. To use it locally:
+
+```bash
+# Build the CLI locally
+go build -o levo ./cmd/cli
+
+# Or use the Docker container
+docker-compose exec levo-api ./levo --help
+```
+
+### CLI Commands
+
+#### Import OpenAPI Specification
+
+```bash
+# Import schema for an application
+levo import --spec /path/to/openapi.json --application app-name
+
+# Import schema for a specific service
+levo import --spec /path/to/openapi.yaml --application app-name --service service-name
+```
+
+#### Test Schemas
+
+```bash
+# Test application-level schema
+levo test --application app-name
+
+# Test service-level schema
+levo test --application app-name --service service-name
+```
+
+### CLI Examples
+
+```bash
+# Import a sample API
+./levo import --spec sample-api.json --application my-app
+
+# Test the imported schema
+./levo test --application my-app
+
+# Import for a specific service
+./levo import --spec api-spec.yaml --application my-app --service user-service
+
+# Test the service schema
+./levo test --application my-app --service user-service
+```
 
 ## Database Migrations
 
